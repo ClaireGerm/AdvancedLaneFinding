@@ -19,12 +19,12 @@
 [image3]: ./output_images/roaddistortion.png "Distortion Correction on the Road"
 [image4]: ./output_images/warped.png "Warp Image"
 [image5]: ./output_images/channels.png "Color Channels"
+[image5a]: ./output_images/hls.png "Color Channels 2"
 [image6]: ./output_images/binary.png "Binary Output"
 [image7]: ./output_images/histogram.png "Histogram"
+[image8]: ./output_images/lines.png "Sliding Window Result"
+[image9]: ./output_images/finalfinalroad.png "Final Result"
 
-
-
-[video1]: ./project_video.mp4 "Video"
 
 ----
 ### Here I will consider the points individually and describe how I addressed each point in my implementation:
@@ -81,6 +81,7 @@ I verified that my perspective transform was working as expected by drawing the 
 I decided to look at different color spaces here; RGB and HLS. I splitted the image into the different channels. These are the results:
 
 ![alttekst][image5]
+![alttekst][image5a]
 
 You'll want to try out various combinations of color and gradiënt thresholds to generate a binary image where the lane lines are clearly visible. When we look at the images we can conclude that a combination of the S and L channel will probably give us the desired result. So the next step is to combine those. This is the combined binary image:
 
@@ -103,6 +104,7 @@ This is the histogram:
 
 We can use the two highest peaks from our histogram as a starting point for determining where the lane lines are, and then use sliding windows moving upward in the image (further along the road) to determine where the lane lines go. The first step is to split the histogram into two sides, one for each lane line. Our next step is to set a few hyperparameters related to our sliding windows, and set them up to iterate across the binary activations in the image. Now that we've set up what the windows look like and have a starting point, we'll want to loop for nwindows, with the given window sliding left or right if it finds the mean position of activated pixels within the window to have shifted. When we have found all our pixels belonging to each line through the sliding window method, it's time to fit a polynomial to the line.
 
+![alttekst][image8]
 
 ### 6. Measuring curvature and the position of the vehicle
 (cell 19 in the notebook)
@@ -116,16 +118,14 @@ Here the idea is to take the measurements of where the lane lines are and estima
 
 The fit from the rectified image has been warped back onto the original image and plotted to identify the lane boundaries. This is the final result:
 
-
+![alttekst][image9]
 
 
 ---
 ## Pipeline (video)
 (cell 23-26 in the notebook)
 
-
-
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./output_images/project_video_output.mp4)
 
 ---
 
