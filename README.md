@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿Advanced Lane Finding Project
+### Advanced Lane Finding Project
 
 ---
 ### The goals of this project are the following:
@@ -14,7 +14,7 @@
 
 [//]: # (Image References)
 
-[image1]: ./output_images/DrawCorners1.png "Finding Chessboard Corners"
+[image1]: ./output_images/findcorners.png "Find Chessboard Corners"
 [image2]: ./output_images/chessboard_distortion_correction.png "Checking Distortion Correction with Chessboard"
 [image3]: ./output_images/undistorted_images.png "Distortion Correction Images"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
@@ -34,7 +34,7 @@ In this first step we need to calibrate our camera using the calibration chessbo
 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  Drawing and displaying the corners resulted in:
 
-![][image1]
+![alttekst][image1]
 
 ### 2. Distortion correction
 (cell 5 + 6 in the notebook)
