@@ -14,7 +14,7 @@
 
 [//]: # (Image References)
 
-[image1]: ./output_images/chessboard_corners.png "Finding Chessboard Corners"
+[image1]: ./output_images/DrawCorners1.png "Finding Chessboard Corners"
 [image2]: ./output_images/chessboard_distortion_correction.png "Checking Distortion Correction with Chessboard"
 [image3]: ./output_images/undistorted_images.png "Distortion Correction Images"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
