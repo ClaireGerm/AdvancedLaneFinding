@@ -41,8 +41,9 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-`    ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, test_image.shape[0:2], None,         None)
-    undist = cv2.undistort(test_image, mtx, dist, None, mtx)`
+`    ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, test_image.shape[0:2], None, None)
+
+undist = cv2.undistort(test_image, mtx, dist, None, mtx)`
 
 ![][image2]
 
@@ -57,9 +58,13 @@ After all the given images are undistorted we apply a perspective transformation
 We first want to identify four source points for our perspective transform. I picked four points in a trapezoidal shape that would represent a rectangle when looking down from above. After defining my source and destination points I warped the image using this code:
 
 `    M = cv2.getPerspectiveTransform(src, dst)
+
     #Also calculate reverse transform matrix
+    
     Mrev = cv2.getPerspectiveTransform(dst, src)
+    
     #Apply the matrix
+    
     warped = cv2.warpPerspective(img, M, (width, height), 
                                  flags=cv2.INTER_LINEAR)`
 
