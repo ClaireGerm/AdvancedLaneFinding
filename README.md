@@ -15,11 +15,15 @@
 [//]: # (Image References)
 
 [image1]: ./output_images/findcorners.png "Find Chessboard Corners"
-[image2]: ./output_images/chessboard_distortion_correction.png "Checking Distortion Correction with Chessboard"
-[image3]: ./output_images/undistorted_images.png "Distortion Correction Images"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+[image2]: ./output_images/chessboarddistortion.png "Distortion Correction with Chessboard"
+[image3]: ./output_images/roaddistortion.png "Distortion Correction on the Road"
+[image4]: ./output_images/warped.png "Warp Image"
+[image5]: ./output_images/channels.png "Color Channels"
+[image6]: ./output_images/binary.png "Binary Output"
+[image7]: ./output_images/histogram.png "Histogram"
+
+
+
 [video1]: ./project_video.mp4 "Video"
 
 ----
@@ -41,15 +45,13 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-`    ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, test_image.shape[0:2], None, None)
+`ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, test_image.shape[0:2], None, None) undist = cv2.undistort(test_image, mtx, dist, None, mtx)`
 
-     undist = cv2.undistort(test_image, mtx, dist, None, mtx)`
-
-![][image2]
+![alttekst][image2]
 
 After applying the undistort fuction to the test image I undistorted the images that a car on the road took:
 
-![][image3]
+![alttekst][image3]
 
 ### 3. Perspective transformation
 (cell 7 - 9 in the notebook)
@@ -57,21 +59,19 @@ After applying the undistort fuction to the test image I undistorted the images 
 After all the given images are undistorted we apply a perspective transformation. We will again use OpenCV functions to rectify each image to a "birds-eye view".  
 We first want to identify four source points for our perspective transform. I picked four points in a trapezoidal shape that would represent a rectangle when looking down from above. After defining my source and destination points I warped the image using this code:
 
-`   M = cv2.getPerspectiveTransform(src, dst)
+`M = cv2.getPerspectiveTransform(src, dst)
 
-    #Also calculate reverse transform matrix
+ #Also calculate reverse transform matrix
     
-    Mrev = cv2.getPerspectiveTransform(dst, src)
+ Mrev = cv2.getPerspectiveTransform(dst, src)
     
-    #Apply the matrix
-    
-    warped = cv2.warpPerspective(img, M, (width, height), 
-                                 flags=cv2.INTER_LINEAR)`
-
+ #Apply the matrix
+ warped = cv2.warpPerspective(img, M, (width, height), 
+                                 flags=cv2.INTER_LINEAR) `
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image:
 
-
+![alttekst][image4]
 
 
 
@@ -80,11 +80,11 @@ I verified that my perspective transform was working as expected by drawing the 
 
 I decided to look at different color spaces here; RGB and HLS. I splitted the image into the different channels. These are the results:
 
-
+![alttekst][image5]
 
 You'll want to try out various combinations of color and gradiënt thresholds to generate a binary image where the lane lines are clearly visible. When we look at the images we can conclude that a combination of the S and L channel will probably give us the desired result. So the next step is to combine those. This is the combined binary image:
 
-
+![alttekst][image6]
 
 
 ### 5. Locate the Lane Lines
@@ -99,11 +99,9 @@ Plotting a histogram of where the binary activations occur across the image is o
 
 This is the histogram:
 
+![alttekst][image7]
 
-
-We can use the two highest peaks from our histogram as a starting point for determining where the lane lines are, and then use sliding windows moving upward in the image (further along the road) to determine where the lane lines go. The first ste[ is to split the histogram into two sides, one for each lane line. Our next step is to set a few hyperparameters related to our sliding windows, and set them up to iterate across the binary activations in the image. Now that we've set up what the windows look like and have a starting point, we'll want to loop for nwindows, with the given window sliding left or right if it finds the mean position of activated pixels within the window to have shifted. When we have found all our pixels belonging to each line through the sliding window method, it's time to fit a polynomial to the line.
-
-
+We can use the two highest peaks from our histogram as a starting point for determining where the lane lines are, and then use sliding windows moving upward in the image (further along the road) to determine where the lane lines go. The first step is to split the histogram into two sides, one for each lane line. Our next step is to set a few hyperparameters related to our sliding windows, and set them up to iterate across the binary activations in the image. Now that we've set up what the windows look like and have a starting point, we'll want to loop for nwindows, with the given window sliding left or right if it finds the mean position of activated pixels within the window to have shifted. When we have found all our pixels belonging to each line through the sliding window method, it's time to fit a polynomial to the line.
 
 
 ### 6. Measuring curvature and the position of the vehicle
