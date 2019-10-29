@@ -43,7 +43,7 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 `    ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, test_image.shape[0:2], None, None)
 
-undist = cv2.undistort(test_image, mtx, dist, None, mtx)`
+     undist = cv2.undistort(test_image, mtx, dist, None, mtx)`
 
 ![][image2]
 
@@ -57,7 +57,7 @@ After applying the undistort fuction to the test image I undistorted the images 
 After all the given images are undistorted we apply a perspective transformation. We will again use OpenCV functions to rectify each image to a "birds-eye view".  
 We first want to identify four source points for our perspective transform. I picked four points in a trapezoidal shape that would represent a rectangle when looking down from above. After defining my source and destination points I warped the image using this code:
 
-`    M = cv2.getPerspectiveTransform(src, dst)
+`   M = cv2.getPerspectiveTransform(src, dst)
 
     #Also calculate reverse transform matrix
     
