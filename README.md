@@ -131,9 +131,10 @@ Here's a [link to my video result](./output_images/project_video_output.mp4)
 
 ### Discussion
 
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+Working oh this project went pretty good. Sometimes looking at all the code was a bit overwhelming so I tried to solve everything step by step. It was a very educational project!
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+When we compare this project to the first project "Finding Lane Lines" we can conclude that this method is far more effective because we can locate turns now. We don't know if this will work on very sharp turns though. Another potential shortcoming is the detection in other weather conditions. The given video is made in perfect sunny weather. What are we going to do with snow or rain? Maybe we can solve those problems by combining channels from different color spaces. 
+ 
 
 
 
